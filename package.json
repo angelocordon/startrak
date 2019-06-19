@@ -27,5 +27,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "polished": "^3.4.1",
+    "styled-components": "^4.3.1"
   }
 }
