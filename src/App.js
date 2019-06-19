@@ -1,6 +1,6 @@
 import React from 'react';
-import {createGlobalStyle} from 'styled-components';
-import {normalize} from 'polished';
+import { createGlobalStyle } from 'styled-components';
+import { normalize } from 'polished';
 
 import { Navbar } from './components/Navbar';
 

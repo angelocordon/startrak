@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 
@@ -11,10 +11,6 @@ const NavbarWrapper = styled.nav`
   align-items: center;
 `;
 
-export const Navbar = function () {
-  return (
-    <NavbarWrapper>
-      StarTrak
-    </NavbarWrapper>
-  )
-}
+export const Navbar = function() {
+  return <NavbarWrapper>StarTrak</NavbarWrapper>;
+};
