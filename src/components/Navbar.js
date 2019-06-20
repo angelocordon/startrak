@@ -1,16 +1,25 @@
 import React from 'react';
 import styled from 'styled-components';
-import { rgba } from 'polished';
+import { globalVars } from '../styles/';
 
 const NavbarWrapper = styled.nav`
   display: flex;
-  padding: 0 1rem;
-  width: 100%;
   height: 3rem;
-  border-bottom: 1px solid ${rgba('#000', 0.3)};
   align-items: center;
 `;
 
-export const Navbar = function() {
-  return <NavbarWrapper>StarTrak</NavbarWrapper>;
+const NavbarBrand = styled.span`
+  font-family: ${globalVars.fontHeadline};
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+`;
+
+const Navbar = function() {
+  return (
+    <NavbarWrapper>
+      <NavbarBrand>StarTrak</NavbarBrand>
+    </NavbarWrapper>
+  );
 };
+
+export default Navbar;
