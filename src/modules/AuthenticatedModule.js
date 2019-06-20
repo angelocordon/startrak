@@ -1,15 +1,11 @@
 import React from 'react';
-import { SearchField } from '../components';
+import SearchModule from './SearchModule';
 
 export default function AuthenticatedModule() {
   return (
     <>
       {/* Your Repos */}
-      {/* Explore others */}
-
-      {/* Panel */}
-      {/* Search component */}
-      <SearchField />
+      <SearchModule />
     </>
   );
 }

@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { globalVars as vars } from '../styles';
-import { Button } from '../components';
+import { globalVars as vars } from '../../styles';
+import { Button } from '../../components';
 
 const SearchFieldComponentWrapper = styled.div`
   margin: 0 auto;
@@ -40,7 +41,13 @@ const SearchButton = styled(Button)`
   color: #fff;
 `;
 
-export default function SearchField() {
+export default function SearchField({ onSearch }) {
+  const inputRef = useRef();
+
+  const handleSearch = function() {
+    onSearch(inputRef.current.value);
+  };
+
   return (
     <SearchFieldComponentWrapper>
       <SearchFieldLabel htmlFor="search-field">
@@ -51,9 +58,14 @@ export default function SearchField() {
           type="text"
           name="search-field"
           placeholder="ex: Ruby on Rails"
+          ref={inputRef}
         />
-        <SearchButton>Search</SearchButton>
+        <SearchButton onClick={handleSearch}>Search</SearchButton>
       </SearchFieldWrapper>
     </SearchFieldComponentWrapper>
   );
 }
+
+SearchField.propTypes = {
+  onSearch: PropTypes.func,
+};
