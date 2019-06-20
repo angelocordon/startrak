@@ -19,7 +19,13 @@ const SignUpButton = styled(Button)`
   }
 `;
 
-export default function AuthenticateModule() {
+export default function AuthenticateModule({ handleAuthentication }) {
+  // TODO: Handle Authentication properly with GitHub's OAuth web flow, or
+  // potentially explore a service with Firebase or Auth0.
+  const authenticate = function() {
+    handleAuthentication();
+  };
+
   return (
     <>
       <Headline>
@@ -29,7 +35,7 @@ export default function AuthenticateModule() {
         Connect your GitHub account to view your starred repositories and
         explore many more.
       </p>
-      <SignUpButton>Connect with GitHub</SignUpButton>
+      <SignUpButton onClick={authenticate}>Connect with GitHub</SignUpButton>
     </>
   );
 }
