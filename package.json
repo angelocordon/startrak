@@ -31,7 +31,6 @@
     ]
   },
   "devDependencies": {
-    "babel-eslint": "^10.0.2",
     "eslint": "^5.16.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-jest": "^22.6.4",
