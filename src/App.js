@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import GlobalStyle from './styles';
-import { Navbar } from './components/';
-import AuthenticateModule from './modules/Authenticate';
+import { Navbar } from './components';
+import { AuthenticateModule, AuthenticatedModule } from './modules';
 
 export default function App() {
-  const [authenticated, setAuthenticated] = useState(false);
+  const [authenticated, setAuthenticated] = useState(true);
 
   const authenticateUser = function() {
     setAuthenticated(true);
@@ -17,7 +17,9 @@ export default function App() {
       <main>
         {!authenticated ? (
           <AuthenticateModule handleAuthentication={authenticateUser} />
-        ) : null}
+        ) : (
+          <AuthenticatedModule />
+        )}
       </main>
     </>
   );
