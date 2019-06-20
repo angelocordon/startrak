@@ -1,5 +1,6 @@
-import Navbar from './Navbar';
 import { Headline } from './Types';
 import { Button } from './Buttons';
+import Navbar from './Navbar';
+import SearchField from './SearchField';
 
-export { Navbar, Headline, Button };
+export { Button, Headline, SearchField, Navbar };
