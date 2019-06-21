@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import client from './apolloClient';
 import GlobalStyle from './styles';
 import { Navbar } from './components';
 import { AuthenticateModule, AuthenticatedModule } from './modules';
@@ -14,13 +15,15 @@ export default function App() {
     <>
       <GlobalStyle />
       <Navbar />
-      <main>
-        {!authenticated ? (
-          <AuthenticateModule handleAuthentication={authenticateUser} />
-        ) : (
-          <AuthenticatedModule />
-        )}
-      </main>
+      <ApolloProvider client={client}>
+        <main>
+          {!authenticated ? (
+            <AuthenticateModule handleAuthentication={authenticateUser} />
+          ) : (
+            <AuthenticatedModule />
+          )}
+        </main>
+      </ApolloProvider>
     </>
   );
 }
