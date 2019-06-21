@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ApolloProvider } from 'react-apollo-hooks';
 import client from './apolloClient';
 import GlobalStyle from './styles';
 import { Navbar } from './components';
