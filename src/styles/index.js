@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   body { 
-    height: 100%;
+    min-height: 100%;
     padding: 1rem 1rem 2rem;
     background-color: #F9FAFE;
     color: ${globalVars.black};

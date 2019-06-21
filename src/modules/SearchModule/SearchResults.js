@@ -2,7 +2,7 @@ import React from 'react';
 import propTypes from 'prop-types';
 import gql from 'graphql-tag';
 import { useQuery } from 'react-apollo-hooks';
-import { Headline as ResultsHeadline } from '../../components';
+import { Headline as ResultsHeadline, RepoItem } from '../../components';
 
 const RESULTS_QUERY = gql`
   query queriedRepos($queryString: String!) {
@@ -13,6 +13,7 @@ const RESULTS_QUERY = gql`
           name
           description
           url
+          viewerHasStarred
         }
       }
     }
@@ -35,7 +36,7 @@ export default function SearchResults({ query }) {
       );
     }
 
-    return data.search.nodes.map(repo => <p key={repo.id}>{repo.name}</p>);
+    return data.search.nodes.map(repo => <RepoItem key={repo.id} {...repo} />);
   };
 
   return (
