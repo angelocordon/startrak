@@ -48,6 +48,12 @@ export default function SearchField({ onSearch }) {
     onSearch(inputRef.current.value);
   };
 
+  const handleInputKeyPress = function(event) {
+    if (event.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <SearchFieldComponentWrapper>
       <SearchFieldLabel htmlFor="search-field">
@@ -59,6 +65,7 @@ export default function SearchField({ onSearch }) {
           name="search-field"
           placeholder="ex: Ruby on Rails"
           ref={inputRef}
+          onKeyPress={handleInputKeyPress}
         />
         <SearchButton onClick={handleSearch}>Search</SearchButton>
       </SearchFieldWrapper>
