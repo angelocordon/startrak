@@ -27,6 +27,14 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${globalVars.fontPrimary};
     line-height: 1.5;
   }
+
+  #root { 
+    margin: auto;
+    width: 100%;
+    @media (min-width: 768px) { width: 75vw }
+
+    @media (min-width: 1020px) { width: 50vw }
+  }
 `;
 
 export default GlobalStyle;

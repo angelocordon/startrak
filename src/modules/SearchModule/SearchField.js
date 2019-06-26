@@ -5,10 +5,7 @@ import { rgba } from 'polished';
 import { globalVars as vars } from '../../styles';
 import { Button } from '../../components';
 
-const SearchFieldComponentWrapper = styled.div`
-  margin: 0 auto;
-  max-width: 500px;
-`;
+const SearchFieldComponentWrapper = styled.div``;
 
 const SearchFieldWrapper = styled.div`
   display: flex;
