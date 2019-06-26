@@ -5,8 +5,8 @@ import { AuthProvider } from './contexts';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import GlobalStyle from './styles';
 import { Navbar } from './components';
-import { AuthenticateModule, AuthenticatedModule } from './modules';
 import { AuthenticatedRoute, RootRoute } from './routes';
+import { HomePage, SearchPage, StarsPage } from './pages';
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(true);

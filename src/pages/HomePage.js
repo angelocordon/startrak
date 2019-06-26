@@ -1,8 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext } from 'react';
+import AuthContext from '../contexts';
 import styled from 'styled-components';
 import { rgba } from 'polished';
 import { Headline, Button } from '../components';
+import { GoMarkGithub } from 'react-icons/go';
 
 const SignUpButton = styled(Button)`
   background-color: #2c3e50;
@@ -20,15 +21,11 @@ const SignUpButton = styled(Button)`
   }
 `;
 
-export default function AuthenticateModule({ handleAuthentication }) {
-  // TODO: Handle Authentication properly with GitHub's OAuth web flow, or
-  // potentially explore a service with Firebase or Auth0.
-  const authenticate = function() {
-    handleAuthentication();
-  };
+export default function HomePage() {
+  const { toggleAuth } = useContext(AuthContext);
 
   return (
-    <>
+    <main>
       <Headline>
         To boldy star repositories you haven't starred before.
       </Headline>
@@ -36,11 +33,9 @@ export default function AuthenticateModule({ handleAuthentication }) {
         Connect your GitHub account to view your starred repositories and
         explore many more.
       </p>
-      <SignUpButton onClick={authenticate}>Connect with GitHub</SignUpButton>
-    </>
+      <SignUpButton onClick={toggleAuth}>
+        <GoMarkGithub /> Connect with GitHub
+      </SignUpButton>
+    </main>
   );
 }
-
-AuthenticateModule.propTypes = {
-  handleAuthentication: PropTypes.func,
-};
