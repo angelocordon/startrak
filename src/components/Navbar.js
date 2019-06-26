@@ -62,13 +62,13 @@ const Navbar = function() {
       {authenticated && (
         <NavbarLinks>
           <li>
-            <NavbarLink to="/stars">
-              <IconStar /> Stars
+            <NavbarLink to="/search">
+              <IconSearch /> Search
             </NavbarLink>
           </li>
           <li>
-            <NavbarLink to="/search">
-              <IconSearch /> Search
+            <NavbarLink to="/stars">
+              <IconStar /> Stars
             </NavbarLink>
           </li>
         </NavbarLinks>

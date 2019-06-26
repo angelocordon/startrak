@@ -50,7 +50,7 @@ export default function App() {
                 exact
                 path="/"
                 component={HomePage}
-                authComponent={StarsPage}
+                authComponent={SearchPage}
               />
               <AuthenticatedRoute path="/search" component={SearchPage} />
               <AuthenticatedRoute path="/stars" component={StarsPage} />
