@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ApolloProvider } from 'react-apollo-hooks';
 import client from './apolloClient';
+import { AuthProvider } from './contexts';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import GlobalStyle from './styles';
 import { Navbar } from './components';
@@ -14,6 +15,10 @@ export default function App() {
     setAuthenticated(true);
   };
 
+  const authContext = {
+    authenticated: authenticated,
+    toggleAuth: toggleAuthentication,
+  };
   return (
     <>
       <GlobalStyle />
