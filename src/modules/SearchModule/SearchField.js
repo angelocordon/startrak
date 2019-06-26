@@ -16,8 +16,8 @@ const SearchFieldWrapper = styled.div`
 
 const SearchFieldLabel = styled.label`
   display: block;
-  margin-bottom: 0.25rem;
-  font-size: 0.8rem;
+  margin: 0.67em 0;
+  font-size: 1rem;
   font-weight: bolder;
   text-transform: capitalize;
 `;
@@ -57,7 +57,7 @@ export default function SearchField({ onSearch }) {
   return (
     <SearchFieldComponentWrapper>
       <SearchFieldLabel htmlFor="search-field">
-        Repository Search Field
+        Search Repositories
       </SearchFieldLabel>
       <SearchFieldWrapper>
         <SearchFieldInput
