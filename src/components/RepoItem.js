@@ -61,7 +61,7 @@ export default function RepoItem({ name, description, url, viewerHasStarred }) {
     <RepoItemWrapper>
       <RepoInfo>
         <RepoName href={url}>{name}</RepoName>
-        <RepoDescription>{description}</RepoDescription>
+        {description && <RepoDescription>{description}</RepoDescription>}
       </RepoInfo>
       <RepoActions>
         <Star
