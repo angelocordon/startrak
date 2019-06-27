@@ -22,23 +22,39 @@ const USER_REPOS_QUERY = gql`
 
 export default function UserReposModule() {
   const { data, error } = useQuery(USER_REPOS_QUERY, { suspend: true });
+  const repos = data.viewer.repositories.nodes;
 
-  const renderResults = function() {
-    if (error) {
-      // eslint-disable-next-line no-console
-      console.error(error);
-      return (
-        <>
-          <p>Sorry! Looks like there was an error.</p>
-          <p>Check the console for details.</p>
-        </>
-      );
-    }
+  // Early return if there are any errors.
+  if (error) {
+    // eslint-disable-next-line no-console
+    console.error(error);
+    return (
+      <div>
+        <p>
+          Sorry! Looks like there was an error.Check the console for details.
+        </p>
+      </div>
+    );
+  }
 
-    return data.viewer.repositories.nodes.map(repo => (
-      <RepoItem key={repo.id} {...repo} />
-    ));
-  };
+  // Gaurd clause for iterating through starred repositories.
+  if (repos.length > 0) {
+    return (
+      <div>
+        {repos.map(repo => (
+          <RepoItem key={repo.id} {...repo} />
+        ))}
+      </div>
+    );
+  }
 
-  return <div>{renderResults()}</div>;
+  // Default return for when there are no starred repositories.
+  return (
+    <div>
+      <p>
+        You don't seem to have any starred repos! Try searching for some and
+        star 'em!
+      </p>
+    </div>
+  );
 }
