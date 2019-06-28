@@ -10,11 +10,18 @@ import Auth from './auth';
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
+
+  const toggleAuthentication = val => {
+    localStorage.setItem('⭐', JSON.stringify({ authenticated: val }));
+    setAuthenticated(val);
+  };
 
   // Define authentication context to be shared with different components
   const authContext = {
     authenticated: authenticated,
-    setAuthenticated: setAuthenticated,
+    toggleAuthentication: toggleAuthentication,
+    setAccessToken: setAccessToken,
     auth: new Auth(),
   };
 
@@ -30,6 +37,13 @@ export default function App() {
       setAuthenticated(true);
     }
   }, []);
+
+  useEffect(() => {
+    if (accessToken.length > 0) {
+      toggleAuthentication(true);
+      console.log(accessToken);
+    }
+  }, [accessToken]);
 
   return (
     <>

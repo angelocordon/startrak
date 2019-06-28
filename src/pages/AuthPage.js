@@ -4,7 +4,7 @@ import { Redirect } from 'react-router-dom';
 import { LoadingUI } from '../components';
 
 export default function AuthPage() {
-  const { authenticated, auth } = useContext(AuthContext);
+  const { authenticated, auth, setAccessToken } = useContext(AuthContext);
   const [authentication, setAuthentication] = useState({});
 
   useEffect(() => {
@@ -29,6 +29,12 @@ export default function AuthPage() {
       };
     }
   }, [auth]);
+
+  useEffect(() => {
+    if (authentication.accessToken) {
+      setAccessToken(authentication.accessToken);
+    }
+  }, [authentication, setAccessToken]);
 
   if (authentication.error) {
     return (
