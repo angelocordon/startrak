@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import propTypes from 'prop-types';
 import AuthContext from '../contexts';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import { HomePage, SearchPage, StarsPage } from '../pages';
+import { HomePage, SearchPage, StarsPage, AuthPage } from '../pages';
 
 const AuthenticatedRoute = function(props) {
   const { authenticated } = useContext(AuthContext);
@@ -32,6 +32,7 @@ const Routes = function() {
         component={HomePage}
         authComponent={SearchPage}
       />
+      <Route exact path="/auth" component={AuthPage} />
       <AuthenticatedRoute path="/search" component={SearchPage} />
       <AuthenticatedRoute path="/stars" component={StarsPage} />
     </Switch>
