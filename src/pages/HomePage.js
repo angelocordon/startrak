@@ -6,6 +6,7 @@ import { Headline, Button } from '../components';
 import { GoMarkGithub } from 'react-icons/go';
 
 const SignUpButton = styled(Button)`
+  display: inline-flex;
   background-color: #2c3e50;
   border-color: transparent;
   color: #fff;
@@ -22,7 +23,14 @@ const SignUpButton = styled(Button)`
 `;
 
 export default function HomePage() {
-  const { toggleAuth } = useContext(AuthContext);
+  const { auth } = useContext(AuthContext);
+
+  const authenticate = function() {
+    // Pass CSRF token through localStorage to be able to match the state params
+    // return from GitHub oauth
+    localStorage.setItem('⭐', JSON.stringify({ csrf_token: auth.state }));
+    return window.open(auth.authURL, '_blank');
+  };
 
   return (
     <main>
@@ -33,7 +41,7 @@ export default function HomePage() {
         Connect your GitHub account to view your starred repositories and
         explore many more.
       </p>
-      <SignUpButton onClick={toggleAuth}>
+      <SignUpButton onClick={authenticate}>
         <GoMarkGithub /> Connect with GitHub
       </SignUpButton>
     </main>
