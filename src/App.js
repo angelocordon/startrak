@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { ApolloProvider } from 'react-apollo-hooks';
-import client from './apolloClient';
+import { setApolloClient } from './apolloClient';
 import { AuthProvider } from './contexts';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './routes';
@@ -11,6 +11,7 @@ import Auth from './auth';
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [accessToken, setAccessToken] = useState('');
+  const [client, setClient] = useState();
 
   const toggleAuthentication = val => {
     localStorage.setItem('⭐', JSON.stringify({ authenticated: val }));
@@ -41,7 +42,7 @@ export default function App() {
   useEffect(() => {
     if (accessToken.length > 0) {
       toggleAuthentication(true);
-      console.log(accessToken);
+      setClient(setApolloClient(accessToken));
     }
   }, [accessToken]);
 
