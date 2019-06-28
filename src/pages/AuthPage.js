@@ -15,10 +15,18 @@ export default function AuthPage() {
     const csrf = session ? session.csrf_token : null;
 
     if (state === csrf) {
+      let mounted = true;
+
       (async () => {
         const response = await auth.authenticate(code);
-        setAuthentication(response);
+        if (mounted) {
+          setAuthentication(response);
+        }
       })();
+
+      return () => {
+        mounted = false;
+      };
     }
   }, [auth]);
 
