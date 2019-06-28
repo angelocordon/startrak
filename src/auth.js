@@ -17,10 +17,9 @@ const authParams = {
 
 export default class Auth {
   constructor() {
-    this.clientID = authParams.clientID;
     this.state = authParams.state;
-    this.authURL = `${authParams.baseURL}?client_id=${this.clientID}&scope=${authParams.scope}&state=${this.state}`;
-    this.postURL = `${authParams.postURL}?client_id=${this.clientID}&client_secret=${authParams.secret}&code=`;
+    this.authURL = `${authParams.baseURL}?client_id=${authParams.clientID}&scope=${authParams.scope}&state=${this.state}`;
+    this.postURL = `${authParams.postURL}?client_id=${authParams.clientID}&client_secret=${authParams.secret}&code=`;
   }
 
   // Handles payload tradeoff with GitHub by passing the code back to GH and
