@@ -13,37 +13,44 @@ export default function App() {
   const [accessToken, setAccessToken] = useState('');
   const [client, setClient] = useState();
 
-  const toggleAuthentication = val => {
-    localStorage.setItem('⭐', JSON.stringify({ authenticated: val }));
-    setAuthenticated(val);
-  };
-
   // Define authentication context to be shared with different components
   const authContext = {
     authenticated: authenticated,
-    toggleAuthentication: toggleAuthentication,
     setAccessToken: setAccessToken,
     auth: new Auth(),
   };
 
-  // Passing an empty array as a second argument to `useEffect()` limits
-  // invoking the hook to when the component mounts.
+  const updateApolloClient = token => {
+    const apolloClient = setApolloClient(token);
+    setClient(apolloClient);
+  };
+
+  const authenticate = token => {
+    setAccessToken(token);
+    setAuthenticated(true);
+    updateApolloClient(token);
+  };
+
+  // On component mount, check to see if user can be authenticated already.
+  // Passing an array as a second argument to `useEffect()` defines the hook
+  // to only run on component mount.
   // Ref: https://www.robinwieruch.de/react-hooks-fetch-data/
   useEffect(() => {
-    // Check to see if user has authenticated before.
-    // Storage objects currently only store string types. Using JSON.parse()
-    // here allows us to retrieve actual booleans.
-    const session = JSON.parse(localStorage.getItem('⭐'));
-    if (session && session.authenticated) {
-      setAuthenticated(true);
+    const token = localStorage.getItem('⭐.token');
+
+    // TODO: This does not consider expired tokens; it's possible that a token
+    // might be expired and so long that there is something set in the
+    // localStorage, this falsely authenticates a user. However, expired
+    // tokens will not allow a user to interact with GitHub's GQL API.
+    if (token.length > 0) {
+      setAccessToken(token);
     }
   }, []);
 
+  // When `accessToken` is updated, ensure to update the `client` for
+  // the ApolloClient context as well.
   useEffect(() => {
-    if (accessToken.length > 0) {
-      toggleAuthentication(true);
-      setClient(setApolloClient(accessToken));
-    }
+    authenticate(accessToken);
   }, [accessToken]);
 
   return (
