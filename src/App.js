@@ -47,7 +47,9 @@ export default function App() {
     // Function in this callback to prevent exhaustive dependencies.
     // Ref: https://twitter.com/dan_abramov/status/1103744582074990594?lang=en
     const authenticate = token => {
-      setAccessToken(token);
+      // NOTE: Definitely not advisable to do this in a production app!!
+      // Recomend looking into other services such as Auth0 or Firebase
+      localStorage.setItem('⭐.token', token);
       setAuthenticated(true);
       updateApolloClient(token);
     };

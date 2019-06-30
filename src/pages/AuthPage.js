@@ -1,57 +1,64 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import AuthContext from '../contexts';
 import { Redirect } from 'react-router-dom';
 import { LoadingUI } from '../components';
 
 export default function AuthPage() {
-  const { authenticated, auth, setAccessToken } = useContext(AuthContext);
-  const [authentication, setAuthentication] = useState({});
+  const { authenticated, setAccessToken, Auth } = useContext(AuthContext);
+  const [authResponse, setAuthResponse] = useState({});
 
+  // On component mount, parse through returned URL params
   useEffect(() => {
     const params = new URLSearchParams(window.location.search.substr(1));
-    const code = params.get('code');
     const state = params.get('state');
-    const session = JSON.parse(localStorage.getItem('⭐'));
-    const csrf = session ? session.csrf_token : null;
+    const csrf = localStorage.getItem('⭐.csrf');
 
-    if (state === csrf) {
-      let mounted = true;
+    // Check to make sure that state is not null when getting redirected URL
+    // and make sure that local csrf token matches responded state token
+    // for security measures.
+    if (state && state === csrf) {
+      const code = params.get('code');
+
+      let fetching = true;
 
       (async () => {
-        const response = await auth.authenticate(code);
-        if (mounted) {
-          setAuthentication(response);
+        const response = await Auth.authenticate(code);
+        if (fetching) {
+          setAuthResponse(response);
         }
       })();
 
+      // Clean up function to cancel asynchronous tasks within hooks.
       return () => {
-        mounted = false;
+        fetching = false;
       };
     }
-  }, [auth]);
+  }, [Auth]);
 
+  // Effects for when `authResponse` is updated from authenticating
   useEffect(() => {
-    if (authentication.accessToken) {
-      setAccessToken(authentication.accessToken);
+    // Because authResponse is expected to be an object, check to make sure that
+    // it has entries inside, and not invoking from initial state.
+    if (authResponse.accessToken) {
+      setAccessToken(authResponse.accessToken);
     }
-  }, [authentication, setAccessToken]);
+  }, [authResponse, setAccessToken]);
 
-  if (authentication.error) {
+  // If user is already authenticated, return to authenticated root route.
+  if (authenticated) {
+    return <Redirect to="/" />;
+  }
+
+  if (authResponse.error) {
     return (
       <div>
         <p>There was an error with connecting to your GitHub account.</p>
-        {/* Typically, this error message would be posted through a logging service (Bugsnag, Raygun, Sentry); a normal user wouldn't need to know about this. */}
-        <p>{authentication.error.description}</p>
+        <p>{authResponse.error.description}</p>
         <p>
-          For reference, see this <a href={authentication.error.uri}>article</a>
-          .
+          For reference, see this <a href={authResponse.error.uri}>article</a>.
         </p>
       </div>
     );
-  }
-
-  if (authenticated) {
-    return <Redirect to="/" />;
   }
 
   return <LoadingUI />;

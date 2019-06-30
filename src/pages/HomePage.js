@@ -23,13 +23,13 @@ const SignUpButton = styled(Button)`
 `;
 
 export default function HomePage() {
-  const { auth } = useContext(AuthContext);
+  const { Auth } = useContext(AuthContext);
 
   const authenticate = function() {
     // Pass CSRF token through localStorage to be able to match the state params
     // return from GitHub oauth
-    localStorage.setItem('⭐', JSON.stringify({ csrf_token: auth.state }));
-    return window.open(auth.authURL, '_blank');
+    localStorage.setItem('⭐.csrf', Auth.state);
+    return window.open(Auth.authURL);
   };
 
   return (
