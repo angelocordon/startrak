@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import propTypes from 'prop-types';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rgba, darken } from 'polished';
 import { globalVars as vars } from '../styles';
+import { GoStar } from 'react-icons/go';
 
 const RepoItemWrapper = styled.div`
   margin-top: 1.2rem;
@@ -36,9 +37,19 @@ const RepoName = styled.a`
   }
 `;
 
-const Star = styled.svg`
-  fill: ${props => (props.starred ? '#f1c40f' : '#666699e6')};
+// Use a CSS mixin based on `starred` property due to how StyledComponents
+// renders elements:
+// Reference: https://github.com/styled-components/styled-components/issues/1198
+const Star = styled(GoStar)`
   margin-right: 0.3rem;
+  ${props =>
+    props.starred
+      ? css`
+          fill: #f1c40f;
+        `
+      : css`
+          fill: #666699e6;
+        `}
 `;
 
 const RepoActions = styled.div`
@@ -50,6 +61,15 @@ const RepoActions = styled.div`
   font-size: 0.8rem;
   font-weight: bold;
   border-top: 1px solid ${rgba(vars.black, 0.1)};
+  cursor: pointer;
+
+  &:hover {
+    color: #f1c40f;
+
+    > ${Star} {
+      fill: #f1c40f;
+    }
+  }
 `;
 
 const RepoDescription = styled.p`
@@ -57,27 +77,21 @@ const RepoDescription = styled.p`
 `;
 
 export default function RepoItem({ name, description, url, viewerHasStarred }) {
+  const [starred, setStarred] = useState(viewerHasStarred);
+
+  const toggleStarItem = () => {
+    setStarred(!starred);
+  };
+
   return (
     <RepoItemWrapper>
       <RepoInfo>
         <RepoName href={url}>{name}</RepoName>
         {description && <RepoDescription>{description}</RepoDescription>}
       </RepoInfo>
-      <RepoActions>
-        <Star
-          viewBox="0 0 14 16"
-          version="1.1"
-          width="14"
-          height="16"
-          aria-hidden="true"
-          starred={viewerHasStarred}
-        >
-          <path
-            fillRule="evenodd"
-            d="M14 6l-4.9-.64L7 1 4.9 5.36 0 6l3.6 3.26L2.67 14 7 11.67 11.33 14l-.93-4.74L14 6z"
-          ></path>
-        </Star>
-        {viewerHasStarred ? 'Starred' : 'Star'}
+      <RepoActions onClick={toggleStarItem}>
+        <Star />
+        {starred ? 'Starred' : 'Star'}
       </RepoActions>
     </RepoItemWrapper>
   );
