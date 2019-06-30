@@ -10,25 +10,19 @@ import Auth from './auth';
 
 export default function App() {
   const [authenticated, setAuthenticated] = useState(false);
-  const [accessToken, setAccessToken] = useState('');
+  const [accessToken, setAccessToken] = useState();
   const [client, setClient] = useState();
 
   // Define authentication context to be shared with different components
   const authContext = {
     authenticated: authenticated,
     setAccessToken: setAccessToken,
-    auth: new Auth(),
+    Auth: new Auth(),
   };
 
   const updateApolloClient = token => {
     const apolloClient = setApolloClient(token);
     setClient(apolloClient);
-  };
-
-  const authenticate = token => {
-    setAccessToken(token);
-    setAuthenticated(true);
-    updateApolloClient(token);
   };
 
   // On component mount, check to see if user can be authenticated already.
@@ -42,7 +36,7 @@ export default function App() {
     // might be expired and so long that there is something set in the
     // localStorage, this falsely authenticates a user. However, expired
     // tokens will not allow a user to interact with GitHub's GQL API.
-    if (token.length > 0) {
+    if (token) {
       setAccessToken(token);
     }
   }, []);
@@ -50,7 +44,17 @@ export default function App() {
   // When `accessToken` is updated, ensure to update the `client` for
   // the ApolloClient context as well.
   useEffect(() => {
-    authenticate(accessToken);
+    // Function in this callback to prevent exhaustive dependencies.
+    // Ref: https://twitter.com/dan_abramov/status/1103744582074990594?lang=en
+    const authenticate = token => {
+      setAccessToken(token);
+      setAuthenticated(true);
+      updateApolloClient(token);
+    };
+
+    if (accessToken) {
+      authenticate(accessToken);
+    }
   }, [accessToken]);
 
   return (
