@@ -1,8 +1,8 @@
 import React, { useContext } from 'react';
-import AuthContext from '../contexts';
+import AuthContext from '../../contexts';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { Headline, Button } from '../components';
+import { Headline, Button } from '../../components';
 import { GoMarkGithub } from 'react-icons/go';
 
 const SignUpButton = styled(Button)`
