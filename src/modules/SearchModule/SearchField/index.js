@@ -2,10 +2,8 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { rgba } from 'polished';
-import { globalVars as vars } from '../../styles';
-import { Button } from '../../components';
-
-const SearchFieldComponentWrapper = styled.div``;
+import { globalVars as vars } from '../../../styles';
+import { Button } from '../../../components';
 
 const SearchFieldWrapper = styled.div`
   display: flex;
@@ -52,7 +50,7 @@ export default function SearchField({ onSearch }) {
   };
 
   return (
-    <SearchFieldComponentWrapper>
+    <section>
       <SearchFieldLabel htmlFor="search-field">
         Search Repositories
       </SearchFieldLabel>
@@ -66,7 +64,7 @@ export default function SearchField({ onSearch }) {
         />
         <SearchButton onClick={handleSearch}>Search</SearchButton>
       </SearchFieldWrapper>
-    </SearchFieldComponentWrapper>
+    </section>
   );
 }
 
